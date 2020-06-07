@@ -19,7 +19,7 @@ test("submits user infromation and renders information on screen", async () => {
   const messageInput = screen.getByLabelText(/Message/i);
  
   fireEvent.change(firstNameInput, {
-    target: { firstName: "firstName", value: "Kar" }
+    target: { firstName: "firstName", value: "Karina" }
   });
   fireEvent.change(lastNameInput, {
     target: { lastName: "lastName", value: "Rodriguez" }
@@ -38,7 +38,7 @@ test("submits user infromation and renders information on screen", async () => {
   fireEvent.click(submitButton);
   
   // assertion
-  await screen.findByText(/"firstName": "Kar"/i);
+  await screen.findByText(/"firstName": "Karina"/i);
 
 
 });
