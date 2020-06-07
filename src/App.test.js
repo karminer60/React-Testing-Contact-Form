@@ -1,6 +1,7 @@
 import React from "react";
-import { render, fireEvent, act} from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import App from "./App";
+import ContactForm from './components/ContactForm.js'
 
 test("renders App without crashing", () => {
   render(<App />);
@@ -9,14 +10,14 @@ test("renders App without crashing", () => {
 
 
 
-test("submits user infromation and renders information on screen", () => {
-  const { getByLabelText, getByText, findAllByText } = render(<App />);
+test("submits user infromation and renders information on screen", async () => {
+  render(<ContactForm/>);
 
-  const firstNameInput = getByLabelText(/First Name/i);
-  const lastNameInput = getByLabelText(/Last Name/i);
-  const emailInput = getByLabelText(/Email/i);
-  const messageInput = getByLabelText(/Message/i);
-  act(() => {
+  const firstNameInput = screen.getByLabelText(/First Name/i);
+  const lastNameInput = screen.getByLabelText(/Last Name/i);
+  const emailInput = screen.getByLabelText(/Email/i);
+  const messageInput = screen.getByLabelText(/Message/i);
+ 
   fireEvent.change(firstNameInput, {
     target: { firstName: "firstName", value: "Kar" }
   });
@@ -29,18 +30,15 @@ test("submits user infromation and renders information on screen", () => {
   fireEvent.change(messageInput, {
     target: { message: "message", value: "Hello, how are you?" }
   });
-});
-  console.log(firstNameInput.value);
 
   // query for the submit button
-  const submitButton = getByText(/submit/i);
+  const submitButton = screen.getByText(/submit/i);
 
   // clicking the button
-  act(() => {fireEvent.click(submitButton);});
+  fireEvent.click(submitButton);
   
-
   // assertion
-  getByText(/.*"firstName": "Kar".*/i);
+  await screen.findByText(/"firstName": "Kar"/i);
 
 
 });
